@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actress Portfolio - Premium Template</title>
+    <!-- Google Fonts for Editorial Serif and Minimal Sans-Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #0e0e0e;
+            --text-pure: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-cream: #fcebca; /* Exact light cream button tone from original reference */
+            --accent-gold: #e2c99a;  /* Tone for the highlighted title word */
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-pure);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Standardized Section Styling */
+        section {
+            padding: 120px 8%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 50px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title span {
+            color: var(--accent-gold);
+        }
+
+        /* --- Full Screen Hero Container with Video Background --- */
+        .hero-video-container {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 6% 40px 6%;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Video Background Element - Scales flexibly to fit any viewport screen size */
+        .hero-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        /* 80% Black Cover Tint Layer covering the video background */
+        .video-overlay-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 5, 0.8); /* 80% Black Transparency */
+            z-index: 2;
+        }
+
+        /* --- STICKY HEADER NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 24px 6%;
+            z-index: 100;
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* Flex distribution system forcing absolute center alignment on nav */
+        .header-left, .header-utilities {
+            flex: 1;
+            display: flex;
+        }
+        
+        .header-utilities {
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text-pure);
+            white-space: nowrap;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: clamp(15px, 3vw, 35px);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: clamp(0.8rem, 1vw, 0.9rem);
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--text-pure);
+        }
+
+        /* Highlight the nav button for the section we're on */
+        nav a.active {
+            color: #e2c99a;
+            font-weight: 500;
+        }
+
+        .util-icon {
+            cursor: pointer;
+            opacity: 0.6;
+            color: var(--text-pure);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .util-icon:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        /* --- Hero Content Layer (Brought to Foreground) --- */
+        .hero-main {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            width: 100%;
+            margin-top: 120px; /* Accounts for sticky header spacer gap */
+            z-index: 5;
+        }
+
+        /* Left Side: Layout Text & Sub-graphics */
+        .hero-left-content {
+            position: relative;
+            padding-right: 40px;
+        }
+
+        /* Asymmetric Title Layout */
+        .main-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        .main-title span.gold-highlight {
+            color: var(--accent-gold);
+        }
+
+        /* Side Slider Counter Accent Lines */
+        .slider-indicator {
+            position: absolute;
+            left: -50px;
+            top: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .indicator-line {
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(to bottom, var(--text-pure), transparent);
+        }
+
+        /* Center Content Alignment (Paragraph + Button) */
+        .narrative-block {
+            margin-left: 18%;
+            max-width: 440px;
+        }
+
+        .narrative-p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        /* Premium Cream Block Button Layout */
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--accent-cream);
+            color: #111111;
+            padding: 14px 32px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            background-color: #ffffff;
+        }
+
+        /* Lower Left Secondary Frame Layout */
+        .lower-layout-row {
+            margin-top: 60px;
+            display: flex;
+            align-items: flex-end;
+            gap: 40px;
+        }
+
+        .sub-media-frame {
+            width: 190px;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 2px;
+            background-color: #111;
+        }
+
+        .sub-media-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.75;
+        }
+
+        .sub-metadata {
+            max-width: 260px;
+            padding-bottom: 20px;
+        }
+
+        .sub-metadata p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        /* Right Side: Primary Full Height Subject Photo */
+        .hero-right-portrait {
+            position: relative;
+            width: 100%;
+            height: 72vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .main-portrait-img {
+            width: 90%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            mask-image: linear-gradient(to left, rgba(0,0,0,1) 75%, rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 75%, rgba(0,0,0,0));
+        }
+
+        /* Overlay Round Glass Blur Badge */
+        .floating-glass-badge {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            pointer-events: none;
+        }
+
+        .floating-glass-badge span.badge-tag {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .floating-glass-badge p {
+            font-size: 0.85rem;
+            line-height: 1.3;
+            font-weight: 400;
+        }
+
+        /* --- SEQUENTIAL SCROLL SYSTEM ELEMENT SETUP --- */
+        #scroll-cta {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-pure);
+            display: inline-flex;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, color 0.3s ease;
+            z-index: 99;
+            cursor: pointer;
+            background: rgba(5, 5, 5, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        #scroll-cta:hover {
+            transform: translateX(-50%) translateY(2px);
+            color: var(--accent-gold);
+        }
+
+        #scroll-cta.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(20px);
+        }
+
+        /* --- SECTION: ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-bio p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .about-bio p:first-of-type {
+            font-size: 1.2rem;
+            color: var(--text-pure);
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        .stats-table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-table td {
+            padding: 18px 0;
+            font-size: 0.95rem;
+        }
+
+        .stats-table td.label {
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 35%;
+        }
+
+        /* --- SECTION: SHOWREEL / GRID --- */
+        .showreel-showcase {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+        }
+
+        .video-box {
+            position: relative;
+            background-color: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+            height: 480px;
+            border: 1px solid var(--border-color);
+        }
+
+        .video-box.main-reel { grid-column: span 8; }
+        .video-box.side-reel { grid-column: span 4; }
+
+        .video-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .video-box:hover img {
+            transform: scale(1.02);
+            opacity: 0.4;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            cursor: pointer;
+        }
+
+        .play-btn-circle {
+            width: 55px; height: 55px;
+            border-radius: 50%;
+            background-color: var(--accent-cream);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .video-box:hover .play-btn-circle {
+            transform: scale(1.1);
+            background-color: #ffffff;
+        }
+
+        .play-overlay h3 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .play-overlay p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- SECTION: PRESS --- */
+        .press-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .press-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px 0;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-pure);
+            transition: var(--transition);
+        }
+
+        .press-row:hover {
+            padding-left: 20px;
+            background: linear-gradient(to right, rgba(255,255,255,0.02), transparent);
+        }
+
+        .press-meta {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .press-source {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: var(--accent-gold);
+            width: 220px;
+        }
+
+        .press-quote {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--text-pure);
+        }
+
+        .press-date {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* --- SECTION: CONTACT --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .info-block {
+            margin-bottom: 30px;
+        }
+
+        .info-block label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+
+        .info-block a, .info-block span {
+            font-size: 1.1rem;
+            color: var(--text-pure);
+            text-decoration: none;
+        }
+
+        /* Minimal Form Design */
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .form-group input, .form-group textarea {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            border-radius: 2px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .submit-btn {
+            grid-column: span 2;
+            justify-self: start;
+            background-color: var(--accent-cream);
+            color: #111;
+            border: none;
+            padding: 16px 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            header {
+                padding: 20px 4%;
+            }
+            .hero-main {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .hero-right-portrait {
+                height: 55vh;
+                order: -1;
+            }
+            .main-portrait-img {
+                width: 100%;
+            }
+            .narrative-block {
+                margin-left: 0;
+            }
+            .slider-indicator {
+                display: none;
+            }
+            .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .video-box.main-reel, .video-box.side-reel {
+                grid-column: span 12;
+                height: 380px;
+            }
+            .press-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+            .header-left, .header-utilities {
+                flex: initial;
+            }
+            .lower-layout-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .form-group.full-width, .form-group {
+                grid-column: span 2;
+            }
+
+            /* FORCE MOBILE SPECIFICS: LOCK TO BOTTOM RIGHT CORNER OVERRIDE */
+            #scroll-cta {
+                left: auto !important;
+                right: 24px !important;
+                bottom: 24px !important;
+                transform: none !important;
+            }
+            #scroll-cta:hover {
+                transform: translateY(2px) !important;
+            }
+            #scroll-cta.hidden {
+                transform: translateY(20px) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Viewport Section with Video Background Loop -->
+    <div class="hero-video-container" id="home">
+        <video class="hero-video-bg" autoplay loop muted playsinline>
+            <source src="video.mov" type="video/mp4">
+        </video>
+        <div class="video-overlay-cover"></div>
+        
+        <header>
+            <div class="header-left">
+                <a href="#" class="brand-logo">Christina <span style="color: #e2c99a;">Andrea</span> Ramsey</a>
+            </div>
+            <nav>
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#showreel">Showreel</a>
+                <a href="#press">Press</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="header-utilities">
+                <!-- IMDb Logo SVG -->
+                <a href="https://www.imdb.com/name/nm14531386/" target="_blank" rel="noopener" aria-label="IMDb">
+                    <svg class="util-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 2H3a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zM6.25 15.42H4.92V8.58h1.33v6.84zm4.84 0h-1.24V10.7l-.65 3.32h-.59l-.65-3.32v4.72H6.72V8.58h1.5l.65 3.19.65-3.19h1.57v6.84zm4.1-1.42c0 .9-.5 1.42-1.44 1.42h-1.57V8.58h1.57c.94 0 1.44.52 1.44 1.42v3.99zm3.89-.08c0 .82-.46 1.5-1.5 1.5h-1.31V8.58h1.31c1.04 0 1.5.68 1.5 1.5v3.34zm-3.89-3.91h-.65v2.5h.65c.42 0 .56-.23.56-.63v-1.24c0-.4-.14-.63-.56-.63zm3.89 3.25c0 .4-.14.63-.56.63h-.65v-2.5h.65c.42 0 .56.23.56.63v1.24z"/>
+                    </svg>
+                </a>
+                <!-- Instagram Logo SVG -->
+                <a href="https://www.instagram.com/christina___andrea/" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg class="util-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+                <!-- TikTok Logo SVG -->
+                <a href="https://www.tiktok.com/@christina__andrea" target="_blank" rel="noopener" aria-label="TikTok">
+                    <svg class="util-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.525.02c1.31 0 2.573.4 3.645 1.152.145.1.275.213.4.331a6.9 6.9 0 0 1 1.57 2.41 7.1 7.1 0 0 1 .536 2.684h-2.318a4.8 4.8 0 0 0-.663-1.68 4.7 4.7 0 0 0-2.317-1.895v11.23a4.762 4.762 0 1 1-4.761-4.762c.242 0 .484.018.723.054v2.364a2.384 2.384 0 1 0 1.654 2.277V0h2.531z"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <main class="hero-main">
+            <div class="slider-indicator">
+                <span>01</span>
+                <div class="indicator-line"></div>
+                <span>03</span>
+            </div>
+
+            <div class="hero-left-content">
+                <h1 class="main-title"><span class="gold-highlight">Artistry</span> and Simplicity</h1>
+                <div class="narrative-block">
+                    <p class="narrative-p">Find your dramatic truth with Christina, connecting raw human emotion with subtle nuance. Christina delivers commanding cinematic and stage performances across global award-winning productions.</p>
+                    <a href="#showreel" class="action-button">
+                        <span>View Reels</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </a>
+                </div>
+
+                <div class="lower-layout-row">
+                    <div class="sub-media-frame">
+                        <img src="andrea2.jpg" alt="Theatre performance still">
+                    </div>
+                    <div class="sub-metadata">
+                        <p>Unique stage presence and artistic clarity bringing depth and true character uniqueness to every project.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-right-portrait">
+                <img class="main-portrait-img" src="https://scontent-lga3-1.cdninstagram.com/v/t51.82787-15/655208875_18072374921635865_6136798292855718766_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzM3MTAwMTIxNjk5MTQ0Mzc2Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=TFscwctBL4MQ7kNvwG9EA1y&_nc_oc=AdpzXm5A7tYCDPkvywtEWFEUY9fxq5q26I_IZLljnpoakC_q4uw8td5XJAyYLfTATxsmxjeR-qMv-oAq9ke9clnY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_gid=tbtvvnH0Zyqy_yTOTcP_bg&_nc_ss=7a22e&oh=00_AQBDiN3-201SfW8OKKxAKHQMJ_0orgIQnluMcgBEZ3ZDnQ&oe=6A507329" alt="Actress Portrait Close-up">
+                <div class="floating-glass-badge">
+                    <span class="badge-tag">Awards</span>
+                    <p>Tony Awards<br>Obie Awards</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MAIN FLOATING INTERACTION LINK (DYNAMIC ROUTER) -->
+    <div id="scroll-cta">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+    </div>
+
+    <!-- SECTION: ABOUT -->
+    <section id="about">
+        <h2 class="section-title">Biography / <span>The Artist</span></h2>
+        <div class="about-grid">
+            <div class="about-bio">
+                <p>Christina Vance is an award-winning dramatic actress whose versatility spans across independent art-house films, classic theater setups, and high-profile screen character profiles.</p>
+                <p>Born into a creative community environment, she completed her formal arts residency training at the Academy of Performance Stills before hitting the festival circuits. Over the last decade, she has cultivated an international reputation for taking on deeply psychological, raw, and physically demanding character roles.</p>
+                <p>Whether controlling the stage or holding the frame in a close-up cinematic production, her process is deeply rooted in physical method balance, capturing complex narratives with absolute simplicity.</p>
+            </div>
+            <div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 10px; font-weight:400;">Vital Statistics</h3>
+                <table class="stats-table">
+                    <tr><td class="label">Height</td><td>5' 8" / 173 cm</td></tr>
+                    <tr><td class="label">Eyes</td><td>Dark Hazel</td></tr>
+                    <tr><td class="label">Hair</td><td>Dark Brown / Curly</td></tr>
+                    <tr><td class="label">Languages</td><td>English, French, Conversational Spanish</td></tr>
+                    <tr><td class="label">Skills</td><td>Classical Piano, Stage Combat, Contemporary Dance</td></tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: SHOWREEL -->
+    <section id="showreel">
+        <h2 class="section-title">Selected Works / <span>Showreel</span></h2>
+        <div class="showreel-showcase">
+            <div class="video-box main-reel">
+                <img src="play1.jpg" alt="Main Drama Reel Cover">
+                <div class="play-overlay">
+                    <div class="play-btn-circle">▶</div>
+                    <h3>Main Dramatic Reel</h3>
+                    <p>Compilation / 2025 - 2026 roles</p>
+                </div>
+            </div>
+            <div class="video-box side-reel">
+                <img src="play2.jpg" alt="Indie Feature Scene Cover">
+                <div class="play-overlay">
+                    <div class="play-btn-circle">▶</div>
+                    <h3>"The Chirping Birds"</h3>
+                    <p>Indie Feature Scene Clip</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: PRESS -->
+    <section id="press">
+        <h2 class="section-title">Screenplays / <span>Press</span></h2>
+        <div class="press-list">
+            <a href="#" class="press-row">
+                <div class="press-meta">
+                    <div class="press-source">Odyssey and the Flowers of the Sun</div>
+                    <div class="press-quote">"Christina delivers a masterclass in quiet, underlying tension. A breakout performance that anchors the play."</div>
+                </div>
+                <div class="press-date">JUN 2026</div>
+            </a>
+            <a href="#" class="press-row">
+                <div class="press-meta">
+                    <div class="press-source">Playbill</div>
+                    <div class="press-quote">"Her transition between classic theatre stage mechanics and raw on-camera realism is breathtakingly seamless."</div>
+                </div>
+                <div class="press-date">Jan 2018</div>
+            </a>
+            <a href="#" class="press-row">
+                <div class="press-meta">
+                    <div class="press-source">Indie Wireframe</div>
+                    <div class="press-quote">"An artistic presence that commands the audience's focus without ever uttering a single misplaced syllable."</div>
+                </div>
+                <div class="press-date">MAY 2025</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- SECTION: CONTACT -->
+    <section id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2 class="section-title" style="margin-bottom:20px;">Get In Touch / <span>Representation</span></h2>
+                <p>For script submissions, business inquiries, or general booking queries, please reach out directly or use the secure communication terminal interface.</p>
+                
+                <div class="info-block">
+                    <label>Theatrical Agent</label>
+                    <span>Theater for the New City - New York</span>
+                </div>
+                <div class="info-block">
+                    <label>Direct Inquiries</label>
+                    <a href="mailto:booking@ChristinaRamsey.com">booking@ChristinaRamsey.com</a>
+                </div>
+            </div>
+            
+            <form class="contact-form" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john@example.com">
+                </div>
+                <div class="form-group full-width">
+                    <label>Subject</label>
+                    <input type="text" placeholder="Casting Submission / Project Pitch">
+                </div>
+                <div class="form-group full-width">
+                    <label>Message / Query Details</label>
+                    <textarea rows="6" placeholder="Describe the character role or project timeline details here..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Dynamics Framework Engine -->
+    <script>
+        const scrollCta = document.getElementById('scroll-cta');
+        const contactSection = document.getElementById('contact');
+
+        // Sequential targets array ordered strictly as requested
+        const targetSections = ['about', 'showreel', 'press', 'contact'];
+
+        // Core visibility evaluation handler
+        function monitorArrowVisibility() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const contactTop = contactSection.getBoundingClientRect().top + scrollY;
+
+            // Instantly hide the element if inside or matching the boundary line of #contact
+            if (scrollY + windowHeight >= contactTop + 60) {
+                scrollCta.classList.add('hidden');
+            } else {
+                scrollCta.classList.remove('hidden');
+            }
+        }
+
+        // Stepped execution logic triggered on click
+        scrollCta.addEventListener('click', () => {
+            const currentScroll = window.scrollY;
+            let targetId = targetSections[0]; // Fallback baseline default
+
+            // Search ahead to match the current viewport frame location
+            for (let i = 0; i < targetSections.length; i++) {
+                const element = document.getElementById(targetSections[i]);
+                if (element) {
+                    const elementTop = element.getBoundingClientRect().top + currentScroll;
+                    
+                    // If the current viewport top is higher than a section's position (with a tiny threshold padding)
+                    if (currentScroll < elementTop - 20) {
+                        targetId = targetSections[i];
+                        break;
+                    }
+                }
+            }
+
+            // Route execution down to the target location coordinates smoothly
+            const destinationElement = document.getElementById(targetId);
+            if (destinationElement) {
+                destinationElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // --- NEW: DYNAMIC NAV TRACKING VIA INTERSECTION OBSERVER ---
+        const navLinks = document.querySelectorAll('nav a');
+        const scrollSections = document.querySelectorAll('.hero-video-container, section');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-30% 0px -60% 0px', // Evaluates items entering upper-middle viewport threshold
+            threshold: 0
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentId = entry.target.getAttribute('id');
+                    
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === `#${currentId}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        scrollSections.forEach(section => sectionObserver.observe(section));
+
+        // Initialize event observers across interactions
+        window.addEventListener('scroll', monitorArrowVisibility);
+        window.addEventListener('resize', monitorArrowVisibility);
+        monitorArrowVisibility();
+    </script>
+</body>
+</html>
