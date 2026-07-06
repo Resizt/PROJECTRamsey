@@ -1,0 +1,80 @@
+const scrollCta = document.getElementById('scroll-cta');
+const contactSection = document.getElementById('contact');
+
+// Sequential targets array ordered strictly as requested
+const targetSections = ['about', 'showreel', 'press', 'contact'];
+
+// Core visibility evaluation handler
+function monitorArrowVisibility() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const contactTop = contactSection.getBoundingClientRect().top + scrollY;
+
+    // Instantly hide the element if inside or matching the boundary line of #contact
+    if (scrollY + windowHeight >= contactTop + 60) {
+        scrollCta.classList.add('hidden');
+    } else {
+        scrollCta.classList.remove('hidden');
+    }
+}
+
+// Stepped execution logic triggered on click
+scrollCta.addEventListener('click', () => {
+    const currentScroll = window.scrollY;
+    let targetId = targetSections[0]; // Fallback baseline default
+
+    // Search ahead to match the current viewport frame location
+    for (let i = 0; i < targetSections.length; i++) {
+        const element = document.getElementById(targetSections[i]);
+        if (element) {
+            const elementTop = element.getBoundingClientRect().top + currentScroll;
+
+            // If the current viewport top is higher than a section's position (with a tiny threshold padding)
+            if (currentScroll < elementTop - 20) {
+                targetId = targetSections[i];
+                break;
+            }
+        }
+    }
+
+    // Route execution down to the target location coordinates smoothly
+    const destinationElement = document.getElementById(targetId);
+    if (destinationElement) {
+        destinationElement.scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+});
+
+// --- NEW: DYNAMIC NAV TRACKING VIA INTERSECTION OBSERVER ---
+const navLinks = document.querySelectorAll('nav a');
+const scrollSections = document.querySelectorAll('.hero-video-container, section');
+
+const observerOptions = {
+    root: null,
+    rootMargin: '-30% 0px -60% 0px', // Evaluates items entering upper-middle viewport threshold
+    threshold: 0
+};
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const currentId = entry.target.getAttribute('id');
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    });
+}, observerOptions);
+
+scrollSections.forEach(section => sectionObserver.observe(section));
+
+// Initialize event observers across interactions
+window.addEventListener('scroll', monitorArrowVisibility);
+window.addEventListener('resize', monitorArrowVisibility);
+monitorArrowVisibility();
