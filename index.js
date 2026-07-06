@@ -78,3 +78,26 @@ scrollSections.forEach(section => sectionObserver.observe(section));
 window.addEventListener('scroll', monitorArrowVisibility);
 window.addEventListener('resize', monitorArrowVisibility);
 monitorArrowVisibility();
+
+// --- VIDEO AUTOPLAY RESUMPTION ON PAGE VISIBILITY ---
+// Handle mobile browser behavior where videos pause when tab loses focus
+const heroVideo = document.querySelector('.hero-video-bg');
+
+if (heroVideo) {
+    // Resume video when page becomes visible again
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden === false) {
+            // Page is now visible, resume video playback
+            heroVideo.play().catch(error => {
+                console.log('Video autoplay resumed:', error);
+            });
+        }
+    });
+
+    // Also handle when user returns to the tab
+    window.addEventListener('focus', () => {
+        heroVideo.play().catch(error => {
+            console.log('Video autoplay on focus:', error);
+        });
+    });
+}
