@@ -79,6 +79,26 @@ window.addEventListener('scroll', monitorArrowVisibility);
 window.addEventListener('resize', monitorArrowVisibility);
 monitorArrowVisibility();
 
+// --- CONTACT FORM MAILTO HANDLER ---
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById('name')?.value?.trim() || '';
+        const email = document.getElementById('email')?.value?.trim() || '';
+        const subject = document.getElementById('subject')?.value?.trim() || 'New contact form submission';
+        const message = document.getElementById('message')?.value?.trim() || '';
+        const recipient = '???'; // Replace with your actual email address
+
+        const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+
+        window.location.href = mailtoLink;
+        contactForm.reset();
+    });
+}
+
 // --- VIDEO AUTOPLAY RESUMPTION ON PAGE VISIBILITY ---
 // Handle mobile browser behavior where videos pause when tab loses focus
 const heroVideo = document.querySelector('.hero-video-bg');
