@@ -414,10 +414,11 @@ nav a.active {
 /* --- SECTION: SHOWREEL / CAROUSEL --- */
 .showreel-carousel {
     display: grid;
-    grid-template-columns: minmax(360px, 760px) minmax(420px, 760px);
+    grid-template-columns: repeat(2, minmax(0, 760px));
     gap: 34px;
     align-items: start;
-    max-width: 1580px;
+    justify-content: center;
+    width: min(100%, 1600px);
     margin: 0 auto;
 }
 
@@ -426,13 +427,15 @@ nav a.active {
     flex-direction: column;
     gap: 18px;
     width: 100%;
+    max-width: 760px;
 }
 
 .showreel-carousel__controls {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 16px;
+    position: relative;
+    padding: 0;
 }
 
 .showreel-track-container {
@@ -442,6 +445,8 @@ nav a.active {
     border-radius: 12px;
     background: var(--bg-dark);
     justify-self: center;
+    box-sizing: border-box;
+    padding-inline: clamp(20px, 5vw, 48px);
 }
 
 .showreel-track {
@@ -449,10 +454,12 @@ nav a.active {
     gap: 16px;
     transition: transform 0.45s ease;
     padding: 16px 0;
+    min-width: 100%;
 }
 
 .showreel-slide {
     position: relative;
+    min-width: 100%;
     flex: 0 0 100%;
     aspect-ratio: 16 / 9;
     border: 1px solid var(--border-color);
@@ -489,25 +496,24 @@ nav a.active {
 .play-overlay {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: flex-end;
     padding: 16px;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 40%);
 }
 
 .play-overlay__content {
+    position: relative;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 12px;
+    height: 100%;
 }
 
 .play-overlay__text {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    max-width: 145px;
+    max-width: calc(100% - 92px);
 }
 
 .play-overlay h3 {
@@ -527,6 +533,9 @@ nav a.active {
 }
 
 .play-overlay-btn {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -553,20 +562,38 @@ nav a.active {
 }
 
 .showreel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     border: 1px solid var(--border-color);
     background: rgba(5, 5, 5, 0.75);
     color: var(--text-pure);
-    width: 48px;
-    height: 48px;
+    width: clamp(40px, 8vw, 48px);
+    height: clamp(40px, 8vw, 48px);
     border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    line-height: 1;
     cursor: pointer;
     transition: var(--transition);
+    z-index: 2;
+}
+
+.showreel-nav--prev {
+    left: 0;
+}
+
+.showreel-nav--next {
+    right: 0;
 }
 
 .showreel-nav:hover {
     border-color: rgba(226, 201, 154, 0.5);
     color: var(--accent-gold);
-    transform: translateY(-1px);
+    transform: translateY(-50%) scale(1.02);
 }
 
 .showreel-dots {
@@ -616,21 +643,26 @@ nav a.active {
 
 .showreel-player__info {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
     margin-top: 18px;
 }
 
 .showreel-player__info h3 {
     font-family: var(--font-serif);
-    font-size: 1.2rem;
-    margin-bottom: 6px;
+    font-size: 1rem;
+    color: var(--accent-gold);
+    margin: 0;
+    line-height: 1.2;
 }
 
 .showreel-player__info p {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
 }
 
 .showreel-player__cue {
@@ -643,13 +675,182 @@ nav a.active {
 @media (max-width: 1024px) {
     .showreel-carousel {
         grid-template-columns: 1fr;
+        justify-content: center;
+        width: min(100%, 760px);
+    }
+
+    .showreel-carousel__thumbnails,
+    .showreel-player {
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
     }
 
     .showreel-player {
         min-height: auto;
     }
+
+    .showreel-nav {
+        display: inline-flex;
+    }
 }
 
+/* --- SECTION: MODELING / RUNWAY --- */
+.modeling-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    width: min(100%, 1160px);
+    margin: 0 auto;
+}
+
+.modeling-thumb {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    background: var(--bg-card);
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+    transition: transform 0.3s ease;
+}
+
+.modeling-thumb:hover {
+    transform: translateY(-2px);
+}
+
+.modeling-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.modeling-thumb:hover img {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.modeling-thumb__label {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1;
+}
+
+.modeling-thumb__label h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    margin: 0;
+    color: var(--accent-gold);
+}
+
+.modeling-thumb__label span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.modeling-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 999;
+    padding: 24px;
+}
+
+.modeling-modal.is-open {
+    display: grid;
+}
+
+.modeling-modal__content {
+    position: relative;
+    width: min(100%, 920px);
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.modeling-modal__image {
+    width: 100%;
+    max-height: min(85vh, 780px);
+    object-fit: contain;
+    border-radius: 20px;
+    background: #000;
+}
+
+.modeling-modal__caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.modeling-modal__caption h3 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+}
+
+.modeling-modal__caption p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.modeling-modal__close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-pure);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: var(--transition);
+}
+
+.modeling-modal__close:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--accent-gold);
+}
+
+@media (max-width: 900px) {
+    .modeling-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(100%, 760px);
+    }
+}
+
+@media (max-width: 640px) {
+    .modeling-gallery {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .modeling-thumb {
+        aspect-ratio: auto;
+        min-height: 240px;
+    }
+}
 
 /* --- SECTION: PRESS --- */
 .press-list {
@@ -836,15 +1037,19 @@ nav a.active {
     }
 
     .showreel-track {
-        grid-template-columns: 1fr;
+        width: 100%;
     }
 
-    .showreel-carousel__viewport {
-        grid-template-columns: 1fr;
+    .showreel-carousel__controls {
+        width: 100%;
     }
 
     .showreel-nav {
-        display: none;
+        display: inline-flex;
+    }
+
+    .showreel-carousel {
+        justify-items: center;
     }
 
     .press-row {

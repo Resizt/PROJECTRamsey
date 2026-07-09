@@ -2,7 +2,7 @@ const scrollCta = document.getElementById('scroll-cta');
 const contactSection = document.getElementById('contact');
 
 // Sequential targets array ordered strictly as requested
-const targetSections = ['about', 'showreel', 'press', 'contact'];
+const targetSections = ['about', 'showreel', 'modeling', 'press', 'contact'];
 
 // Core visibility evaluation handler
 function monitorArrowVisibility() {
@@ -209,3 +209,52 @@ if (showreelNextButton) {
 }
 
 updateShowreelSelection(0);
+
+// --- MODELING / RUNWAY GALLERY LIGHTBOX ---
+const modelingThumbs = Array.from(document.querySelectorAll('.modeling-thumb'));
+const modelingModal = document.getElementById('modeling-modal');
+const modelingModalImage = document.getElementById('modeling-modal-image');
+const modelingModalTitle = document.getElementById('modeling-modal-title');
+const modelingModalDescription = document.getElementById('modeling-modal-description');
+const modelingModalClose = document.querySelector('.modeling-modal__close');
+
+function openModelingModal(thumb) {
+    const imageUrl = thumb.dataset.full;
+    const titleText = thumb.dataset.title || 'Modeling Image';
+    const captionText = thumb.dataset.caption || '';
+
+    modelingModalImage.src = imageUrl;
+    modelingModalImage.alt = titleText;
+    modelingModalTitle.textContent = titleText;
+    modelingModalDescription.textContent = captionText;
+    modelingModal.classList.add('is-open');
+    modelingModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeModelingModal() {
+    modelingModal.classList.remove('is-open');
+    modelingModal.setAttribute('aria-hidden', 'true');
+    modelingModalImage.src = '';
+}
+
+modelingThumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => openModelingModal(thumb));
+});
+
+if (modelingModalClose) {
+    modelingModalClose.addEventListener('click', closeModelingModal);
+}
+
+if (modelingModal) {
+    modelingModal.addEventListener('click', (event) => {
+        if (event.target === modelingModal) {
+            closeModelingModal();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modelingModal.classList.contains('is-open')) {
+            closeModelingModal();
+        }
+    });
+}
