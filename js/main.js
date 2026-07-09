@@ -173,8 +173,12 @@ function updateShowreelSelection(index) {
     }
 
     if (activeSlide) {
-        showreelVideoTitle.textContent = activeSlide.dataset.title || 'Showreel Clip';
-        showreelVideoDescription.textContent = activeSlide.dataset.description || 'Featured performance';
+        const overlayText = activeSlide.querySelector('.play-overlay__text');
+        const overlayTitle = overlayText?.querySelector('h3')?.textContent?.trim();
+        const overlayDescription = overlayText?.querySelector('p')?.textContent?.trim();
+
+        showreelVideoTitle.textContent = overlayTitle || activeSlide.dataset.title || 'Showreel Clip';
+        showreelVideoDescription.textContent = overlayDescription || activeSlide.dataset.description || 'Featured performance';
         showreelVideo.poster = activeSlide.dataset.poster || '';
         showreelVideo.src = activeSlide.dataset.video || '';
         showreelVideo.load();
