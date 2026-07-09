@@ -26,6 +26,7 @@
                     <a href="#home" class="active">Home</a>
                     <a href="#about">About</a>
                     <a href="#showreel">Showreel</a>
+                    <a href="#modeling">Modeling</a>
                     <a href="#press">Press</a>
                     <a href="#contact">Contact</a>
                 </nav>
@@ -110,7 +111,7 @@
                     <table class="stats-table">
                         <tr>
                             <td class="label">Height</td>
-                            <td>5' 8" / 173 cm</td>
+                            <td>5' 5" / 165 cm</td>
                         </tr>
                         <tr>
                             <td class="label">Eyes</td>
@@ -135,21 +136,129 @@
         <!-- SECTION: SHOWREEL -->
         <section id="showreel">
             <h2 class="section-title">Selected Works / <span>Showreel</span></h2>
-            <div class="showreel-showcase">
-                <div class="video-box main-reel">
-                    <img src="assets/pictures/play1.jpg" alt="Main Drama Reel Cover">
-                    <div class="play-overlay">
-                        <div class="play-btn-circle">▶</div>
-                        <h3>Main Dramatic Reel</h3>
-                        <p>Compilation / 2025 - 2026 roles</p>
+            <div class="showreel-carousel" aria-label="Showreel carousel">
+                <div class="showreel-carousel__thumbnails">
+                    <div class="showreel-carousel__controls">
+                        <button class="showreel-nav showreel-nav--prev" type="button" aria-label="Previous clip">&#10094;</button>
+                        <div class="showreel-track-container">
+                            <div class="showreel-track">
+                                <button class="showreel-slide is-active" type="button" data-video="assets/videos/screenplay.mp4" data-poster="assets/pictures/thumbnail1.png" data-title="Monolauge Audition" data-description="A Midsummers Night's Dream ~ William Shakespeare">
+                                    <img src="assets/pictures/thumbnail1.png" alt="Monolauge Audition Cover">
+                                    <span class="play-overlay">
+                                        <span class="play-overlay__text">
+                                            <h3>Monolauge Audition</h3>
+                                            <p>A Midsummers Night's Dream ~ William Shakespeare</p>
+                                        </span>
+                                        <span class="play-overlay-btn"></span>
+                                    </span>
+                                </button>
+                                <button class="showreel-slide" type="button" data-video="assets/videos/screenplay2.mp4" data-poster="assets/pictures/play1.jpg" data-title="Main Dramatic Reel" data-description="Compilation / 2025 - 2026 roles">
+                                    <img src="assets/pictures/play2.png" alt="Main Dramatic Reel Cover">
+                                    <span class="play-overlay">
+                                        <span class="play-overlay__text">
+                                            <h3>Hermia Pled For Help</h3>
+                                            <p>On stage in a pivotal scene</p>
+                                        </span>
+                                        <span class="play-overlay-btn"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="showreel-nav showreel-nav--next" type="button" aria-label="Next clip">&#10095;</button>
+                    </div>
+                    <div class="showreel-dots" role="tablist" aria-label="Select a reel"></div>
+                </div>
+                <div class="showreel-player">
+                    <video id="showreel-video" controls playsinline preload="metadata" poster="assets/pictures/play1.jpg">
+                        <source src="assets/videos/video.mp4" type="video/mp4">
+                    </video>
+                    <div class="showreel-player__info">
+                        <div>
+                            <h3 id="showreel-video-title">Main Dramatic Reel</h3>
+                            <p id="showreel-video-description">Compilation / 2025 - 2026 roles</p>
+                        </div>
+                        <span class="showreel-player__cue">Click a card to swap the clip</span>
                     </div>
                 </div>
-                <div class="video-box side-reel">
-                    <img src="assets/pictures/play3.jpg" alt="Indie Feature Scene">
-                    <div class="play-overlay">
-                        <div class="play-btn-circle">▶</div>
-                        <h3>"The Chirping Birds"</h3>
-                        <p>Indie Feature Scene Clip</p>
+            </div>
+        </section>
+        <!-- SECTION: MODELING -->
+        <section id="modeling">
+            <h2 class="section-title">Modeling / <span>Runway</span></h2>
+            <div class="modeling-gallery">
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/andrea2.jpg" data-title="Runway Portrait 1" data-caption="City sunset styling">
+                    <img src="assets/pictures/andrea2.jpg" alt="Runway Portrait 1">
+                    <div class="modeling-thumb__label">
+                        <h3>Headshot 1</h3>
+                        <span>Headshot Profile</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/model1.png" data-title="Runway Portrait 2" data-caption="Editorial movement shot">
+                    <img src="assets/pictures/model1.png" alt="Runway Portrait 2">
+                    <div class="modeling-thumb__label">
+                        <h3>Runway</h3>
+                        <span>Editorial movement shot</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/andrea3.jpg" data-title="Runway Portrait 3" data-caption="Studio light portrait">
+                    <img src="assets/pictures/andrea3.jpg" alt="Runway Portrait 3">
+                    <div class="modeling-thumb__label">
+                        <h3>Headshot 2</h3>
+                        <span>Studio light portrait</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/model2.png" data-title="Runway Portrait 4" data-caption="Night runway detail">
+                    <img src="assets/pictures/model2.png" alt="Runway Portrait 4">
+                    <div class="modeling-thumb__label">
+                        <h3>Runway 2</h3>
+                        <span>Night runway detal</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/andrea1.jpg" data-title="Runway Portrait 5" data-caption="Movement and texture">
+                    <img src="assets/pictures/andrea1.jpg" alt="Runway Portrait 5">
+                    <div class="modeling-thumb__label">
+                        <h3>Headshot 3</h3>
+                        <span>Editorial movement shot</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/play2.png" data-title="Runway Portrait 6" data-caption="High fashion gesture">
+                    <img src="assets/pictures/play2.png" alt="Runway Portrait 6">
+                    <div class="modeling-thumb__label">
+                        <h3>Play Capture</h3>
+                        <span>Pivotal moment</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/play4.jpg" data-title="Runway Portrait 7" data-caption="Elegant silhouette shot">
+                    <img src="assets/pictures/play1.jpg" alt="Runway Portrait 7">
+                    <div class="modeling-thumb__label">
+                        <h3>Play Capture 2</h3>
+                        <span>Emotional expression</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/play3.jpg" data-title="Runway Portrait 8" data-caption="Soft editorial glow">
+                    <img src="assets/pictures/play3.jpg" alt="Runway Portrait 8">
+                    <div class="modeling-thumb__label">
+                        <h3>Play Capture 3</h3>
+                        <span>Soft editorial glow</span>
+                    </div>
+                </button>
+                <button class="modeling-thumb" type="button" data-full="assets/pictures/model3.png" data-title="Runway Portrait 9" data-caption="Modern fashion pose">
+                    <img src="assets/pictures/model3.png" alt="Runway Portrait 9">
+                    <div class="modeling-thumb__label">
+                        <h3>Runway 3</h3>
+                        <span>Modern fashion pose</span>
+                    </div>
+                </button>
+            </div>
+            <div class="modeling-modal" id="modeling-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modeling-modal-title">
+                <div class="modeling-modal__content">
+                    <button class="modeling-modal__close" type="button" aria-label="Close photo viewer">×</button>
+                    <img class="modeling-modal__image" id="modeling-modal-image" src="" alt="">
+                    <div class="modeling-modal__caption">
+                        <div>
+                            <h3 id="modeling-modal-title"></h3>
+                            <p id="modeling-modal-description"></p>
+                        </div>
                     </div>
                 </div>
             </div>
