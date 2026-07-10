@@ -90,7 +90,7 @@ if (contactForm) {
         const email = document.getElementById('email')?.value?.trim() || '';
         const subject = document.getElementById('subject')?.value?.trim() || 'New contact form submission';
         const message = document.getElementById('message')?.value?.trim() || '';
-        const recipient = '???'; // Replace with your actual email address
+        const recipient = 'christina.andrea.rams@gmail.com'; // Replace with your actual email address
 
         const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
 
