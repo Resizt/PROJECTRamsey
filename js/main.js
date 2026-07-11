@@ -224,8 +224,13 @@ const modelingModalClose = document.querySelector('.modeling-modal__close');
 
 function openModelingModal(thumb) {
     const imageUrl = thumb.dataset.full;
-    const titleText = thumb.dataset.title || 'Modeling Image';
-    const captionText = thumb.dataset.caption || '';
+    const label = thumb.querySelector('.modeling-thumb__label');
+    const headingText = label?.querySelector('h3')?.textContent?.trim() || '';
+    const subtitleText = label?.querySelector('span')?.textContent?.trim() || '';
+    const titleText = headingText && subtitleText
+        ? `${headingText} — ${subtitleText}`
+        : thumb.dataset.title || 'Modeling Image';
+    const captionText = thumb.dataset.caption || subtitleText || '';
 
     modelingModalImage.src = imageUrl;
     modelingModalImage.alt = titleText;
