@@ -148,8 +148,9 @@ if (showreelDotsContainer && showreelSlides.length) {
 const showreelDots = Array.from(document.querySelectorAll('.showreel-dot'));
 
 let activeShowreelIndex = 0;
+let shouldAutoplayShowreel = false;
 
-function updateShowreelSelection(index) {
+function updateShowreelSelection(index, autoplay = false) {
     if (!showreelSlides.length || !showreelVideo) {
         return;
     }
@@ -182,33 +183,39 @@ function updateShowreelSelection(index) {
         showreelVideo.poster = activeSlide.dataset.poster || '';
         showreelVideo.src = activeSlide.dataset.video || '';
         showreelVideo.load();
-        showreelVideo.play().catch(() => {
-            // Ignore autoplay restrictions on some browsers.
-        });
+
+        if (autoplay) {
+            showreelVideo.play().catch(() => {
+                // Ignore autoplay restrictions on some browsers.
+            });
+        } else {
+            showreelVideo.pause();
+            showreelVideo.currentTime = 0;
+        }
     }
 }
 
 showreelSlides.forEach((slide, index) => {
     slide.addEventListener('click', () => {
-        updateShowreelSelection(index);
+        updateShowreelSelection(index, true);
     });
 });
 
 showreelDots.forEach((dot) => {
     dot.addEventListener('click', () => {
-        updateShowreelSelection(Number(dot.dataset.index));
+        updateShowreelSelection(Number(dot.dataset.index), true);
     });
 });
 
 if (showreelPrevButton) {
     showreelPrevButton.addEventListener('click', () => {
-        updateShowreelSelection(activeShowreelIndex - 1);
+        updateShowreelSelection(activeShowreelIndex - 1, true);
     });
 }
 
 if (showreelNextButton) {
     showreelNextButton.addEventListener('click', () => {
-        updateShowreelSelection(activeShowreelIndex + 1);
+        updateShowreelSelection(activeShowreelIndex + 1, true);
     });
 }
 
